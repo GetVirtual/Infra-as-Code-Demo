@@ -6,16 +6,16 @@
 * VSTS
 
 
-# Infrastructure Template
+## Infrastructure Template
 * ARM
 * Terraform
 
 
-# Config
+## Config
 * DSC (Desired Systemstate Configration)
 * Ansible
 
 
-# Build Server
+## Build Server
 * VSTS
 * Jenkins
