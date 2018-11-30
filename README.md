@@ -1,4 +1,4 @@
-# The Evolution from GUI to Infrastrcture as Code with CI/CD Pipeline
+## The Evolution from GUI to Infrastructure as Code with CI/CD Pipeline
 
 1. GUI (100-GUI)
 2. Scripting with Azure CLI (200) / Powershell (201)
