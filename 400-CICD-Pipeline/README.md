@@ -2,8 +2,8 @@
 
 
 ## Repository
-* GitHub
-* VSTS
+* [GitHub](https://github.com/)
+* [VSTS](https://dev.azure.com/)
 
 
 ## Infrastructure Template
@@ -12,10 +12,10 @@
 
 
 ## Config
-* DSC (Desired Systemstate Configration)
+* DSC (Desired State Configuration)
 * Ansible
 
 
 ## Build Server
-* VSTS
+* [VSTS](https://dev.azure.com/)
 * Jenkins
