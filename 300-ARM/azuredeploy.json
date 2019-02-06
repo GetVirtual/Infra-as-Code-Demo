@@ -20,11 +20,11 @@
         }
     },
     "variables": {
-        "site1vnetPrefix": "10.10.11.0/24",
-        "site1vnetSubnet1Name": "default",
-        "site1vnetSubnet1Prefix": "10.10.11.0/24",
-        "site1vnetSubnet2Name": "default2",
-        "site1vnetSubnet2Prefix": "10.10.12.0/24",
+        "site1vnetPrefix": "10.10.0.0/16",
+        "site1vnetSubnet1Name": "subnet1",
+        "site1vnetSubnet1Prefix": "10.10.1.0/24",
+        "site1vnetSubnet2Name": "subnet2",
+        "site1vnetSubnet2Prefix": "10.10.2.0/24",
         "site1vm1Name": "site1vm1",
         "site1vm1ImagePublisher": "MicrosoftWindowsServer",
         "site1vm1ImageOffer": "WindowsServer",
