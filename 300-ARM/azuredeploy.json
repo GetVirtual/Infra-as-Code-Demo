@@ -23,6 +23,8 @@
         "site1vnetPrefix": "10.10.11.0/24",
         "site1vnetSubnet1Name": "default",
         "site1vnetSubnet1Prefix": "10.10.11.0/24",
+        "site1vnetSubnet2Name": "default",
+        "site1vnetSubnet2Prefix": "10.10.12.0/24",
         "site1vm1Name": "site1vm1",
         "site1vm1ImagePublisher": "MicrosoftWindowsServer",
         "site1vm1ImageOffer": "WindowsServer",
@@ -55,6 +57,12 @@
                         "name": "[variables('site1vnetSubnet1Name')]",
                         "properties": {
                             "addressPrefix": "[variables('site1vnetSubnet1Prefix')]"
+                        }
+                    },
+                    {
+                        "name": "[variables('site1vnetSubnet2Name')]",
+                        "properties": {
+                            "addressPrefix": "[variables('site1vnetSubnet2Prefix')]"
                         }
                     }
                 ]
