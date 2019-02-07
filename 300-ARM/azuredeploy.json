@@ -180,7 +180,7 @@
     "outputs": {
         "URL": {
             "type": "string",
-            "value": "[reference('vm1pip').dnsSettings.FQDN]"
+            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', variables('vm1pipname'))).properties.dnsSettings.FQDN]"
         }
     }
 }
