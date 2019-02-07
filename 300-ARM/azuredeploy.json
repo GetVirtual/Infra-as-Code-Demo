@@ -20,53 +20,56 @@
         }
     },
     "variables": {
-        "site1vnetPrefix": "10.10.0.0/16",
-        "site1vnetSubnet1Name": "subnet1",
-        "site1vnetSubnet1Prefix": "10.10.1.0/24",
-        "site1vm1Name": "site1vm1",
-        "site1vm1ImagePublisher": "MicrosoftWindowsServer",
-        "site1vm1ImageOffer": "WindowsServer",
-        "site1vm1VmSize": "Standard_D2_v2",
-        "site1vm1VnetID": "[resourceId('Microsoft.Network/virtualNetworks', 'site1vnet')]",
-        "site1vm1SubnetRef": "[concat(variables('site1vm1VnetID'), '/subnets/', variables('site1vnetSubnet1Name'))]",
-        "site1vm1NicName": "[concat(variables('site1vm1Name'), 'NetworkInterface')]"
+        "vnetPrefix": "10.10.0.0/16",
+        "vnetSubnet1Name": "subnet1",
+        "vnetSubnet1Prefix": "10.10.1.0/24",
+        "vm1Name": "vm1",
+        "vm1ImagePublisher": "MicrosoftWindowsServer",
+        "vm1ImageOffer": "WindowsServer",
+        "vm1VmSize": "Standard_D2_v2",
+        "vm1VnetID": "[resourceId('Microsoft.Network/virtualNetworks', 'vnet')]",
+        "vm1SubnetRef": "[concat(variables('vm1VnetID'), '/subnets/', variables('vnetSubnet1Name'))]",
+        "vm1NicName": "[concat(variables('vm1Name'), 'NetworkInterface')]",
+        "DSCurl": "https://github.com/GetVirtual/ARM-Templates/raw/master/MultiRegionHA/DSC/IIS.zip",
+        "DSCfilename": "IIS.ps1",
+        "DSCfunction": "IIS"
     },
     "resources": [
         {
-            "name": "site1vnet",
+            "name": "vnet",
             "type": "Microsoft.Network/virtualNetworks",
             "location": "[resourceGroup().location]",
             "apiVersion": "2018-10-01",
             "dependsOn": [],
             "tags": {
-                "displayName": "site1vnet"
+                "displayName": "vnet"
             },
             "properties": {
                 "addressSpace": {
                     "addressPrefixes": [
-                        "[variables('site1vnetPrefix')]"
+                        "[variables('vnetPrefix')]"
                     ]
                 },
                 "subnets": [
                     {
-                        "name": "[variables('site1vnetSubnet1Name')]",
+                        "name": "[variables('vnetSubnet1Name')]",
                         "properties": {
-                            "addressPrefix": "[variables('site1vnetSubnet1Prefix')]"
+                            "addressPrefix": "[variables('vnetSubnet1Prefix')]"
                         }
                     }
                 ]
             }
         },
         {
-            "name": "[variables('site1vm1NicName')]",
+            "name": "[variables('vm1NicName')]",
             "type": "Microsoft.Network/networkInterfaces",
             "location": "[resourceGroup().location]",
             "apiVersion": "2018-10-01",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', 'site1vnet')]"
+                "[resourceId('Microsoft.Network/virtualNetworks', 'vnet')]"
             ],
             "tags": {
-                "displayName": "site1vm1Nic"
+                "displayName": "vm1Nic"
             },
             "properties": {
                 "ipConfigurations": [
@@ -75,7 +78,7 @@
                         "properties": {
                             "privateIPAllocationMethod": "Dynamic",
                             "subnet": {
-                                "id": "[variables('site1vm1SubnetRef')]"
+                                "id": "[variables('vm1SubnetRef')]"
                             }
                         }
                     }
@@ -83,34 +86,34 @@
             }
         },
         {
-            "name": "[variables('site1vm1Name')]",
+            "name": "[variables('vm1Name')]",
             "type": "Microsoft.Compute/virtualMachines",
             "location": "[resourceGroup().location]",
             "apiVersion": "2017-03-30",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkInterfaces', variables('site1vm1NicName'))]"
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('vm1NicName'))]"
             ],
             "tags": {
-                "displayName": "site1vm1"
+                "displayName": "vm1"
             },
             "properties": {
                 "hardwareProfile": {
-                    "vmSize": "[variables('site1vm1VmSize')]"
+                    "vmSize": "[variables('vm1VmSize')]"
                 },
                 "osProfile": {
-                    "computerName": "[variables('site1vm1Name')]",
+                    "computerName": "[variables('vm1Name')]",
                     "adminUsername": "[parameters('AdminUserName')]",
                     "adminPassword": "[parameters('AdminPassword')]"
                 },
                 "storageProfile": {
                     "imageReference": {
-                        "publisher": "[variables('site1vm1ImagePublisher')]",
-                        "offer": "[variables('site1vm1ImageOffer')]",
+                        "publisher": "[variables('vm1ImagePublisher')]",
+                        "offer": "[variables('vm1ImageOffer')]",
                         "sku": "[parameters('WindowsOSVersion')]",
                         "version": "latest"
                     },
                     "osDisk": {
-                        "name": "site1vm1OSDisk",
+                        "name": "vm1OSDisk",
                         "caching": "ReadWrite",
                         "createOption": "FromImage"
                     }
@@ -118,11 +121,33 @@
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('site1vm1NicName'))]"
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('vm1NicName'))]"
                         }
                     ]
                 }
             }
-        }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(variables('vm1Name'), '/Microsoft.Powershell.DSC')]",
+            "apiVersion": "2018-06-01",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/virtualMachines', variables('vm1Name'))]"
+            ],
+            "properties": {
+              "publisher": "Microsoft.Powershell",
+              "type": "DSC",
+              "typeHandlerVersion": "2.76",
+              "autoUpgradeMinorVersion": true,
+              "settings": {
+                "configuration": {
+                  "url": "[variables('DSCurl')]",
+                  "script": "[variables('DSCfilename')]",
+                  "function": "[variables('DSCfunction')]"
+                }
+              }
+            }
+          }
     ]
 }
