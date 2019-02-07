@@ -16,7 +16,7 @@
     <img src="http://armviz.io/visualizebutton.png"/>
 </a>
 
-## Step 3: Same template but VM and associated subnet removed
+## Step 3: Same template but VM and associated subnet removed (not wo)
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FGetVirtual%2FInfra-as-Code-Demo%2Fmaster%2F300-ARM%2Fazuredeploy-step3.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
