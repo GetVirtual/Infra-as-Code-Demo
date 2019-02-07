@@ -58,6 +58,12 @@
                         "properties": {
                             "addressPrefix": "[variables('site1vnetSubnet1Prefix')]"
                         }
+                    },
+                    {
+                        "name": "[variables('site1vnetSubnet2Name')]",
+                        "properties": {
+                            "addressPrefix": "[variables('site1vnetSubnet2Prefix')]"
+                        }
                     }
                 ]
             }
