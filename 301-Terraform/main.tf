@@ -2,6 +2,16 @@ provider "azurerm" {
     
 }
 
+# Ressource Group Name
+variable "rgname" {
+  default = "301-Terraform-Demo-RG"
+}
+
+# Cost Center Tag
+variable "costcenter" {
+  default = "DSCDemo"  
+}
+
 terraform {
   backend "azurerm" {
     storage_account_name = "jloremotetfstate"
@@ -14,14 +24,9 @@ terraform {
   }
 }
 
-# Cost Center Tag
-variable "costcenter" {
-  default = "DSCDemo"  
-}
-
 # Ressource Group
 resource "azurerm_resource_group" "rg" {
-  name     = "301-Terraform-Demo-RG"
+  name     = "${var.rgname}"
   location = "West Europe"
 
   tags {
