@@ -1,5 +1,5 @@
 provider "azurerm" { 
-    subscription_id = "180b44f4-1d54-4817-87ef-22ca8f374006"
+    
 }
 
 # Cost Center Tag
