@@ -12,17 +12,11 @@ variable "costcenter" {
   default = "DSCDemo"  
 }
 
-variable "rtfkey" {}
-variable "rtfaccesskey" {}
-
 
 terraform {
   backend "azurerm" {
     storage_account_name = "jloremotetfstate"
     container_name       = "tfstate"
-    key                  = "iacdemo.terraform.tfstate"
-
-    access_key = "${var.rtfaccesskey}"
   }
 }
 
